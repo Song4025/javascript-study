@@ -1,4 +1,9 @@
 
+.dark {
+    background: black;
+    color: white;
+}
+
 .list-group {
     display: none;
 }
@@ -25,6 +30,12 @@
     padding: 30px;
 }
 .show-modal{
+    display: block;
+    visibility: visible;
+    opacity: 1;
+}
+
+.show-dark{
     display: block;
     visibility: visible;
     opacity: 1;
