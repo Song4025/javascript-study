@@ -1,3 +1,17 @@
+:root {
+    scroll-behavior: auto;
+}
+
+.navbar {
+    position: fixed;
+    width: 100%;
+    z-index: 5;
+}
+.navbar-brand {
+    font-size: 30px;
+    font-weight: bold;
+    transition : all 0.5s;
+}
 
 .dark {
     background: black;
@@ -10,6 +24,14 @@
 
 .show {
     display: block;
+}
+.main-bg {
+    background: lightslategray;
+    padding: 20px;
+    width : 100%;
+    height: 40vh;
+    display: table;
+    vertical-align: middle;
 }
 
 .black-bg {
@@ -39,4 +61,17 @@
     display: block;
     visibility: visible;
     opacity: 1;
+}
+
+.slide-container{
+    width: 300vw;
+}
+
+.slide-box {
+    width: 100vw;
+    float: left;
+}
+
+.slide-box img {
+    width: 100%;
 }

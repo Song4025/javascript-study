@@ -17,7 +17,7 @@
   <body class="dark">
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container-fluid">
-          <a class="navbar-brand" href="#">Navbar</a>
+          <a class="navbar-brand" href="#">EllieExpress</a>
           <span class="badge bg-dark" onclick="clickCount()">Dark 🔁</span>
           <button class="navbar-toggler" type="button">
             <span class="navbar-toggler-icon"></span>
@@ -31,17 +31,87 @@
         <li class="list-group-item">A fourth item</li>
         <li class="list-group-item">And a fifth one</li>
       </ul>
-      <button id="login">로그인</button>
+      <div class="main-bg" style="display:table;">
+        <div style="display:table-cell; vertical-align:middle;">
+          <h4>Shirts on Sale</h4>
+          <button id="login" class="btn btn-danger">로그인</button>
+        </div>
+      </div>
+      <div class="alert alert-danger" style="border-radius:0px; margin:0px;">
+        <span class="saleCount">5</span>초 이내 구매시 사은품 증정!
+      </div>
+      <div style="overflow: hidden">
+        <div class="slide-container">
+          <div class="slide-box">
+            <img src="car1.png">
+          </div>
+          <div class="slide-box">
+            <img src="car2.png">
+          </div>
+          <div class="slide-box">
+            <img src="car3.png">
+          </div>
+        </div>
+      </div> 
+      <button class="slide-1">1</button> 
+      <button class="slide-2">2</button> 
+      <button class="slide-3">3</button>
+      <button class="next-slide">다음</button>
+      <script>
+        //하단 배너 사진 1,2,3 다음버튼 클릭시 
+      let currentPicture = 1;
+      document.querySelector('.next-slide').addEventListener('click', ()=>{
+        console.log(currentPicture);
+        document.querySelector('.slide-container').style.transform='translateX(-' + currentPicture + '00vw)';
+        currentPicture ++ ;
+        if(currentPicture >= 3){
+          currentPicture = 0;
+        }
+      });
+      </script>
+      <div class="lorem" style="width: 200px; height: 100px; overflow-y: scroll">
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quae voluptas voluptatum minus praesentium fugit debitis at, laborum ipsa itaque placeat sit, excepturi eius. Nostrum perspiciatis, eligendi quae consectetur praesentium exercitationem.
+      </div> 
+      <script>
+        // 사용자가 스크롤을 어디까지 내렸는지 확인하는 소스
+        window.addEventListener('scroll', ()=>{
+          if(window.scrollY >= 100){
+            $('.navbar-brand').css('font-size', '20px');
+          }else{
+            $('.navbar-brand').css('font-size', '30px');
+          }
+        });
+        // $(window).on('scroll', ()=>{
+        //   $(window).scrollTop();
+        // });
 
-      <p>태조 이성계가 태어난 년도는? (4자리로 제출하시오 ex: 2022)</p>
+        // 퀴즈 : div의 스크롤바 내린 양 == div의 실제높이
+        // 알림창
+        
+        $('.lorem').on('scroll', ()=>{
+          let 스크롤양 = document.querySelector('.lorem').scrollTop;
+          let 화면높이 = document.querySelector('.lorem').clientHeight;
+          let 실제높이 = document.querySelector('.lorem').scrollHeight;
+          if((스크롤양 + 화면높이) > 실제높이 - 10){
+            alert('약관을 다 읽었습니다.');
+          }
+          // 스크롤 버그 주의: 컴퓨터에 무리를 주고 2번 실행되기도함.
+          // 구글에 검색하면?
+        });
+
+
+      </script>
+      <div style="height:1000px;"></div>
+      
+      <!-- <p>태조 이성계가 태어난 년도는? (4자리로 제출하시오 ex: 2022)</p>
         <input type="text" id="answer"> (년)
-      <button id="send-answer">제출</button>
+      <button id="send-answer">제출</button> -->
       <div class="black-bg">
         <div class="white-bg">
-          <h4>로그인하세요</h4>
+          <h4>로그인 하세요</h4>
           <form action="success.html">
             <div class="my-3">
-              <input type="text" id="inputId" class="form-control">
+              <input type="text" id="email" class="form-control">
              </div>
              <div class="my-3">
                <input type="password" id="inputPassword" class="form-control">
@@ -58,13 +128,11 @@
       3. 원할 때 최종 스타일로 변하라고 자바스크립트 코드를 짠다.
       4. transition을 추가한다.
  -->
-
       <script>
 
         // 1회 dark 클릭시 내부 글자를 light로 변경
         // 2회 dark 클릭시 내부 글자를 dark 로 변경
         // 규칙을 파악하여 코드를 짜면될거같음. .. 홀수? 짝수?
-        
         let btnCount = 0;
         function clickCount(){
           btnCount++;
@@ -90,12 +158,20 @@
         document.querySelector('#submit').addEventListener('click', (e)=>{
           // 전송버튼을 눌렀을때
           // input에 입력값이 없으면 알림창을 띄워주세요
-          const id = document.querySelector('#inputId');
+          const email = document.querySelector('#email');
           const password = document.querySelector('#inputPassword');
-          if(id.value == ''){
-            alert('아이디를 입력해주세요');
-            id.focus();
+          const chkEmail = /\S+@\S+\.\S+/ ;
+          const chkPW = /(?=.*[A-Z])/ ;
+
+          if(email.value == ''){
+            alert('이메일을 입력해주세요');
+            email.focus();
             e.preventDefault();
+          }else if(chkEmail.test(email.value) == false){
+            console.log(email.value);
+            alert('이메일 형식을 확인해주세요');
+            email.focus();
+            e.preventDefault();  
           }else if(password.value == ''){
             alert('비밀번호를 입력해주세요');
             password.focus();
@@ -104,8 +180,52 @@
             alert('비밀번호는 6자리 이상으로 해야합니다.');
             password.focus();
             e.preventDefault();
+          }else if(chkPW.test(password.value) == false){
+            alert('비밀번호는 알파벳 대문자가 포함되어야 합니다.');
+            password.focus();
+            e.preventDefault();
           }
         });
+
+      // setInterval(()=>{
+      //   console.log('1초마다 여기에 ??');
+      // }, 1000);
+
+      // 1초마다 alert창 안에 있는 숫자가 줄어들게 해주세요.
+
+      let count = 5;
+      
+      setInterval(()=>{
+        count-- ;
+        if(count >= 0){
+          document.querySelector('.saleCount').innerHTML = count;
+        }
+      }, 1000);
+
+      setTimeout(function(){
+
+        // 5초뒤에 실행될 코드
+        $('.alert-danger').hide();
+        console.log('할인이 끝났습니다.');
+      }, 5000);
+      
+      document.querySelector('.slide-1').addEventListener('click', ()=>{
+        document.querySelector('.slide-container').style.transform='translateX(0vw)';
+        document.querySelector('.slide-container').style.transition='all 1s';
+      });
+
+      document.querySelector('.slide-2').addEventListener('click', ()=>{
+        document.querySelector('.slide-container').style.transform='translateX(-100vw)';
+        document.querySelector('.slide-container').style.transition='all 1s';
+      });
+
+      document.querySelector('.slide-3').addEventListener('click', ()=>{
+        document.querySelector('.slide-container').style.transform='translateX(-200vw)';
+        document.querySelector('.slide-container').style.transition='all 1s';
+      });
+
+      
+
       // id가 inputId인 값이 변할때 -> 즉, input에서 일어나는 이벤트
       // document.getElementById('inputId').addEventListener('change', (e)=>{
       //   console.log('gi');
@@ -165,7 +285,34 @@
           alert('멍청이');
         }
       });
-      */      
+      */   
+     
+      /* 함수에 분과 초를 차례로 파라미터로 입력하면 ms단위로 바꿔서 뱉어주는 함수를 만들어봅시다.(1초 == 1000ms 입니다)
+      (동작예시) console.log(함수(1,30)) 
+      이렇게 사용하면 콘솔창에 90000이 출력되어야합니다 (90초 x 1000)
+      function total(a, b){
+          return (a * 60 * 1000) + (b * 1000)
+      }
+      console.log(total(1,30));
+      console.log(total(2,10));
+      */
+
+      /*  가격을 파라미터로 입력하면 10% 할인가를 뱉는 함수를 만들어봅시다.
+          근데 첫 구매여부도 true/false로 둘째파라미터에 입력해서 첫 구매가 맞을 경우 추가로 1.5 달러도 할인해줘야합니다. 
+          주의사항은 가격으로 10.3 이런거 넣으면 뒤에 소수점 길게 나올 수도 있으니 알아서 처리해보든가 합시다. 
+      (동작예시) console.log(함수(70, false))  이렇게 사용하면 콘솔창에 63이 출력되어야합니다 (10% 할인가격이고 추가할인 없음)
+      (동작예시) console.log(함수(10, true)) 이렇게 사용하면 콘솔창에 7.5가 출력되어야합니다 (10% 할인가격 9에 추가할인 1.5 해줌)
+     function total(a, b){
+        let result = a - (a * 0.1);
+        if(b == true){
+            result = result - 1.5;
+        }
+        return parseFloat(result.toFixed(2));
+      }
+      console.log(total(10.3, true));
+      */
+
+
       </script>
 
   </body>
