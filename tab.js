@@ -104,3 +104,55 @@ function openTab(p) {
     jContent.removeClass('show');
     content[p].classList.add('show');
 }
+
+
+// document.querySelector('.form-select').addEventListener('click', (e) =>{
+//     let selected = $('.form-select');
+//     // if(e.target.value == '셔츠'){
+//     //     selected.eq(1).removeClass('none');
+//     // }else{
+//     //     selected.eq(1).addClass('none');
+//     // }
+//     e.target.value == '셔츠'? selected.eq(1).removeClass('none') : selected.eq(1).addClass('none');
+// });
+
+//input이벤트 : input의 값이 변경될 때마다 .
+$('.form-select').eq(0).on('input' , (e)=>{
+    // var value = $('.form-select').eq(0).val(); 여기나 아래나 같아요.
+    // let value = this.value; 
+    let value = e.currentTarget.value;
+    if(value == '셔츠'){
+        $('.form-select').eq(1).removeClass('none');
+        let 셔츠사이즈 = `<option>사이즈: 90</option>
+        <option>사이즈: 100</option>`;
+            $('.form-select').eq(1).html(셔츠사이즈);
+    }else if(value == '바지'){
+        let pants = [28, 30, 32];
+        $('.form-select').eq(1).removeClass('none');
+        $('.form-select').eq(1).html('');
+        pants.forEach((p, i)=>{
+            $('.form-select').eq(1).append('<option>사이즈: '+ p +'</option>');
+        })
+    }
+    else{
+        $('.form-select').eq(1).addClass('none');
+    }
+});
+
+// 오브젝트안에 반복문의 값을 다 쓰고싶을때?
+let obj = {name: 'yang' , age : 30}
+for (let key in obj){
+    console.log(obj[key]);
+}
+// 반복문의 용도 1. 코드반복. 2.array,object데이터 전부 꺼내고 싶을때
+
+// 자바스크립트 html 생성 (성능면으로 추천. 아래보다 2배빠름)
+// let a = document.createElement('P');
+//     a.innerHTML= '안녕?';
+// document.querySelector('#test').appendChild(a);
+
+let 템플릿 = '<p>안녕하세요</p>';
+// insertAdjacentHTML(어느위치에추가할지, 추가할문자) : 문자형 html넣어주는 함수 
+document.querySelector('#test').insertAdjacentHTML('beforeend', 템플릿);
+$('#test').append(템플릿);
+// 다 갈아치우고싶으면 innerHTML 이지요

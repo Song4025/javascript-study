@@ -49,13 +49,51 @@
         display: none;
         padding: 10px;
         }
+        .none {
+        display: none;
+        }
         .show {
         display: block;
         }
     </style>
 </head>
 <body>
+    <div class="container mt-3">
+        <div class="card p-3">
+            <span class="car-name" style="display:flex"></span>
+            <span class="car-price" style="display:flex"></span>
+        </div>
+    </div>
+    <script>
+        // let car = ['소나타', 50000, 'white'];
+        // car[0] ='스포티지';
+        // console.log(car[0]);
+        // let car2 = {name: '소나타', price: 60000, color: 'black'}
+        // car2.price = 70000;
+        // console.log(car2.price);
+        // console.log(car.slice(1, 3));
+        let car = {name: '스포티지', price: [1800, 2200, 3000], color: 'white'}
+        
+        document.querySelector('.car-name').innerHTML= car.name;
+        document.querySelector('.car-price').innerHTML= car.price[0];
+    </script>
     <div class="container mt-5">
+        <form class="container my-5 form-group">
+            <p>상품선택</p>
+            <select class="form-select mt-2">
+                <option>모자</option>
+                <option>셔츠</option>
+                <option>바지</option>
+            </select>
+            <select class="form-select mt-2 none">
+                <option>사이즈: S(90)</option>
+                <option>사이즈: M(95)</option>
+                <option>사이즈: L(100)</option>
+            </select>
+        </form>
+        <div id="test">
+            <h4>나는제목</h4>
+        </div>
         <ul class="list">
             <li class="tab-button orange" data-id="0">Products</li>
             <li class="tab-button" data-id="1">Information</li>
