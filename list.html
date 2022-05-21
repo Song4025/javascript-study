@@ -14,51 +14,65 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"
         integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous">
     </script>
-
-    <style>
-       
-    </style>
 </head>
 <body>
-    <div class="card-group container">
-        <div class="card">
-            <img src="https://via.placeholder.com/600">
-            <div class="card-body">
-            <h5></h5>
-            <p>가격 : 70000</p>
-            <button class="btn btn-danger">주문하기</button>
-            </div>
-        </div>
-        <div class="card">
-            <img src="https://via.placeholder.com/600">
-            <div class="card-body">
-            <h5>Card title</h5>
-            <p>가격 : 70000</p>
-            <button class="btn btn-danger">주문하기</button>
-            </div>
-        </div>
-        <div class="card">
-            <img src="https://via.placeholder.com/600">
-            <div class="card-body">
-            <h5>Card title</h5>
-            <p>가격 : 70000</p>
-            <button class="btn btn-danger">주문하기</button>
-            </div>
+    <div class="container">
+        <div class="row">      
+            <!-- <div class="col-sm-4"> 이부분은 자바스크립트로 추가하겠음.
+              <img src="https://via.placeholder.com/600" class="w-100">
+              <h5>Card title</h5>
+              <p>가격 : 70000</p>
+            </div> -->
         </div>
     </div>
     <script>
-    // 서버에서 가져온 임의 데이터
-    var products = [
-        { id : 0, price : 70000, title : 'Blossom Dress' },
-        { id : 1, price : 50000, title : 'Springfield Shirt' },
-        { id : 2, price : 60000, title : 'Black Monastery' }
-    ];
-    let h5 = document.querySelectorAll('.card-body h5');
-    let p = document.querySelectorAll('.card-body p');
-    for(let i = 0; i < products.length; i++ ){
-        h5[i].innerHTML=products[i].title;
-        p[i].innerHTML=`가격 : ${products[i].price}`;
-    }
+        var products = [
+            { id : 0, price : 70000, title : 'Blossom Dress' },
+            { id : 1, price : 50000, title : 'Springfield Shirt' },
+            { id : 2, price : 60000, title : 'Black Monastery' }
+        ];
+        products.forEach((a, i)=>{
+        let 템플릿 = `<div class="col-sm-4">
+            <img src="https://via.placeholder.com/600" class="w-100">
+            <h5>${a.title}</h5>
+            <p>${products[i].price} 원</p>
+        </div>`;
+        $('.row').append(템플릿);
+        });
     </script> 
+    <div class="container">
+      <button class="btn btn-danger" id="more">더보기</button>
+    </div>
+    <script>
+        let more = 0;
+        // 더보기 버튼 클릭시 상품 3개 가져와보기
+        $('#more').on('click', ()=>{
+            more ++ ;
+            if(more == 1){
+                $.get('https://codingapple1.github.io/js/more1.json')
+                .done((data)=>{
+                    getData(data);
+                });
+            }
+            else if(more == 2){
+                $.get('https://codingapple1.github.io/js/more2.json')
+                .done((data)=>{
+                    getData(data);
+                });
+                $('#more').hide();
+            }
+        });
+        function getData(data){
+            console.log(data)
+                data.forEach((a, i)=>{
+                let 템플릿 = `<div class="col-sm-4">
+                    <img src="https://via.placeholder.com/600" class="w-100">
+                    <h5>${a.title}</h5>
+                    <p>${a.price} 원</p>
+                </div>`;
+                $('.row').append(템플릿);
+            });
+        }
+    </script>
 </body>
 </html>
