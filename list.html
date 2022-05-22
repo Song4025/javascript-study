@@ -25,25 +25,140 @@
             </div> -->
         </div>
     </div>
+    <div class="container my-3">
+        <button class="btn btn-danger" id="priceA">가격순정렬</button>
+    </div>
     <script>
-        var products = [
+        let products = [
             { id : 0, price : 70000, title : 'Blossom Dress' },
             { id : 1, price : 50000, title : 'Springfield Shirt' },
             { id : 2, price : 60000, title : 'Black Monastery' }
         ];
-        products.forEach((a, i)=>{
-        let 템플릿 = `<div class="col-sm-4">
-            <img src="https://via.placeholder.com/600" class="w-100">
-            <h5>${a.title}</h5>
-            <p>${products[i].price} 원</p>
-        </div>`;
-        $('.row').append(템플릿);
+
+        $('#priceA').on('click', ()=>{
+            products.sort((a, b)=>{
+                return a.price - b.price
+            });
+            console.log(products);
+            // 정렬까지는 됬지만 html을 다시 그려주진 않음 그래서 ...
+            $('.row').html('') ;
+            productsHtml();
         });
+        productsHtml();
+        
+        function productsHtml(){
+            products.forEach((a, i)=>{
+                let 템플릿 = `<div class="col-sm-4">
+                    <img src="https://via.placeholder.com/600" class="w-100">
+                    <h5>${a.title}</h5>
+                    <p>${products[i].price} 원</p>
+                    <button class="buy">구매</button>
+                </div>`;
+                $('.row').append(템플릿);
+            });
+        }
+
+        // localStorage 다루는법
+        localStorage.setItem('이름','kim');
+        // 담은 데이터를 출력하는법?
+        localStorage.getItem('이름');
+        // 담은 데이터를 삭제하는법?
+        localStorage.removeItem('이름');
+        // 문자숫자 외에 array나 object 저장하고싶으면? json형식으로 바꿔라
+        let arr =[1,2,3,4];
+        let newArr = JSON.stringify(arr);
+        localStorage.setItem('num',newArr);
+        let get = localStorage.getItem('num');
+        console.log(get);
+        // 꺼낸 JSON데이터를 다시 어레이나 오브젝트로 변경하고싶어요.
+        console.log(JSON.parse(get));
+        // sessionStorage 사용법은 localStorage를 sessionStorage로 변경만 해주면돼요
+        // 로컬스토리지 데이터를 수정하고싶으면? 문법상 존재하지않아서 아래 3가지 단계를 거쳐야함
+        // 1. 자료꺼냄 2. 꺼낸거 수정함. 3. 다시넣음
+        // Q. sibling을 이용해서 구매버튼 누를 시 localStorage에 json형식으로 데이터가 저장되어야함.
+        // 경우의 수가 존재함으로 key명이 없을 시 추가해주세요 라고 코드 짬 
+        // 1. 구매버튼 누르면 2.지금 누른버튼 윗윗 [글자]를 가져와서 3. localStorage에 저장
+        $('.buy').click((e)=>{
+            let title = $(e.target).siblings('h5').text();
+            // 이미 cart라는 항목이 있으면 수정하기. 그게 아니면 ..
+            if(localStorage.getItem('cart') != null){
+                let getJson = JSON.parse(localStorage.cart);
+                console.log(getJson);
+                getJson.push(title);
+                console.log(getJson);
+                localStorage.setItem('cart', JSON.stringify(getJson));
+            }else{
+            localStorage.setItem('cart', JSON.stringify([title]));
+        }
+        });
+
+        let 어레이 = [7, 3, 5, 2, 40]
+        // let 어레이2 = ['a','c','b']
+        // 어레이.sort(function(a,b){
+        //     return b - a
+        // });
+        // 어레이2.sort();
+        let 필터어레이 = 어레이.filter(function(p){
+            return p < 4
+        });
+        // console.log(필터어레이);
+        // sort는 원본을 변형시킴(옛날문법). filter는 원본을 변형X(최신)
+
+        let 맵어레이 = 어레이.map(function(p){
+            return p * 4
+        });
+        console.log(맵어레이);
+        // ex) 쇼핑몰에서 해외제품을 원화로 변경할 때.
+
+        // function 내림차순(s){
+        //     let splitS = s.split('');
+        //     let sortS = splitS.sort()
+        //     let reserseS = sortS.reverse();
+        //     let joinS = reserseS.join('');
+        //     return joinS;
+        // }
+        // 내림차순("kjelkjs");
+        // console.log(내림차순("kjelkjs"));
     </script> 
-    <div class="container">
-      <button class="btn btn-danger" id="more">더보기</button>
+
+    <div class="container my-4">
+        <button class="btn btn-danger" id="titleA">상품명정렬(내림차순)</button>
     </div>
     <script>
+        $('#titleA').on('click', ()=>{
+            products.sort((a, b)=>{
+                return a.title > b.title ? -1 : a.title > b.title ? 1 : 0;
+            });
+            console.log(products);
+            $('.row').html('');
+            productsHtml();
+        });
+    </script>
+    <div class="container my-5">
+        <button class="btn btn-danger" id="filter">6만원 이하</button>
+    </div>
+    <script>
+        $('#filter').on('click', ()=>{
+            let 필터상품 = products.filter(function(p){
+                return p.price <= 60000
+            });
+            console.log(필터상품);
+            $('.row').html('');
+            필터상품.forEach((a, i)=>{
+                let 템플릿 = `<div class="col-sm-4">
+                    <img src="https://via.placeholder.com/600" class="w-100">
+                    <h5>${a.title}</h5>
+                    <p>${a.price} 원</p>
+                </div>`;
+                $('.row').append(템플릿);
+            });
+        });
+    </script>
+    <div class="container">
+        <button class="btn btn-danger" id="more">더보기</button>
+    </div>
+    <script>
+        /*
         let more = 0;
         // 더보기 버튼 클릭시 상품 3개 가져와보기
         $('#more').on('click', ()=>{
@@ -73,6 +188,8 @@
                 $('.row').append(템플릿);
             });
         }
+        */
+
     </script>
 </body>
 </html>
